@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <SCRIPT LANGUAGE="JavaScript">
+            window.onload =	initPage;
+           
+            function fire()	{
+                //alert("Inside fire");
+                fireInput	= 	document.getElementById("FireInput").value;
+                //alert("fireInput="+fireInput);
+                request	= createRequest();
+                if (request	== null) {
+                    alert("Unable to create	request");
+                    return;
+                }
+                var url= "http://localhost:1234?action=fire&value="+escape(fireInput);
+                //alert("url="+url);
+                request.open("GET",	url, true);
+                request.onreadystatechange = displayDetails;
+                request.send(null);
+            }
+            
+            
+            function kill()	{
+                //alert("Inside kill");
+                request	= createRequest();
+                if (request	== null) {
+                    alert("Unable to create	request");
+                    return;
+                }
+                var url= "http://localhost:1234?action=kill";
+                //alert("url="+url);
+                request.open("GET",	url, true);
+                request.onreadystatechange = displayDetails;
+                request.send(null);
+            }
+            
+            
+            
+            function initPage()	{
+            
+            }
+
+            
+            function createRequest() {
+                //alert("Inside createRequest");
+                try {
+                    request	= new XMLHttpRequest();
+                }	catch (tryMS) {
+                    try	{
+                        request =	new	ActiveXObject("Msxml2.XMLHTTP");
+                    } catch	(otherMS) {
+                        try {
+                            request	= new ActiveXObject("Microsoft.XMLHTTP");
+                        }	catch (failed) {
+                            request	= null;
+                        }
+                    }
+                }
+                return request;
+            }
+
+
+
+
+            function displayDetails() {
+                //alert("Inside displayDetails() with request.readyState = "+request.readyState);
+                if (request.readyState == 4) {
+                    //alert("request.readyState == 4. Means Server has finished sending data to the client");
+                    if (request.status == 200) {
+                        //alert("request.status == 200. Means data transfer successful");
+                        //alert("The Data transferred is -> request.responseText = "+request.responseText);
+                        document.getElementById("FireInput").value = request.responseText;
+                    }
+                }
+
+            }            
+        </SCRIPT>
+    </head>
+    <body>
+        <FORM NAME="myform" ACTION="" METHOD="GET">
+            <INPUT  type="button" Value="Fire" Name="Fire" onClick="fire()">
+            <INPUT TYPE="text" id="FireInput" VALUE="0"><br>
+            <INPUT  type="button" Value="Kill" Name="Kill" onClick="kill()">            
+        </form>
+    </body>
+</html>

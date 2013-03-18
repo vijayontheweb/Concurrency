@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <SCRIPT LANGUAGE="JavaScript">
+                            
+            function fire()	{
+                //alert("Inside fire");
+                request	= createRequest();
+                if (request	== null) {
+                    alert("Unable to create	request");
+                    return;
+                }
+                var url= "http://localhost:1234?action=fire";
+                //alert("url="+url);
+                request.open("GET",	url, true);
+                request.onreadystatechange = displayDetails;
+                request.send(null);
+            }
+            
+            function createRequest() {
+                //alert("Inside createRequest");
+                try {
+                    request	= new XMLHttpRequest();
+                }	catch (tryMS) {
+                    try	{
+                        request =	new	ActiveXObject("Msxml2.XMLHTTP");
+                    } catch	(otherMS) {
+                        try {
+                            request	= new ActiveXObject("Microsoft.XMLHTTP");
+                        }	catch (failed) {
+                            request	= null;
+                        }
+                    }
+                }
+                return request;
+            }
+
+
+
+
+            function displayDetails() {
+                alert("Inside displayDetails() with request.readyState = "+request.readyState);
+                if (request.readyState == 4) {
+                    alert("request.readyState == 4. Means Server has finished sending data to the client");
+                    if (request.status == 200) {
+                        alert("request.status == 200. Means data transfer successful");
+                        alert("The Data transferred is -> request.responseText = '"+request.responseText+"'");
+                        document.getElementById("output").innerHTML = request.responseText; 
+                        
+                    }
+                }                
+            }            
+
+        </SCRIPT>
+    </head>
+    <body>
+        <FORM NAME="myform" ACTION="" METHOD="GET">
+            <INPUT  type="button" Value="Fire" Name="Fire" onClick="fire()">            
+            <div id="output"></div>
+            <!--<table>
+              <tr>
+                  <td>
+                      <div id="R1C1">NO</div>
+                  </td>
+                  <td>
+                      <div id="R1C2">NO</div>
+                  </td>
+                  <td>
+                      <div id="R1C3">NO</div>
+                  </td>
+                  <td>
+                      <div id="R1C4">NO</div>
+                  </td>
+                  <td>
+                      <div id="R1C5">NO</div>
+                  </td>
+              </tr>  
+              <tr>
+                  <td>
+                      <div id="R2C1">NO</div>
+                  </td>
+                  <td>
+                      <div id="R2C2">NO</div>
+                  </td>
+                  <td>
+                      <div id="R2C3">NO</div>
+                  </td>
+                  <td>
+                      <div id="R2C4">NO</div>
+                  </td>
+                  <td>
+                      <div id="R2C5">NO</div>
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      <div id="R3C1">NO</div>
+                  </td>
+                  <td>
+                      <div id="R3C2">NO</div>
+                  </td>
+                  <td>
+                      <div id="R3C3">NO</div>
+                  </td>
+                  <td>
+                      <div id="R3C4">NO</div>
+                  </td>
+                  <td>
+                      <div id="R3C5">NO</div>
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      <div id="R4C1">NO</div>
+                  </td>
+                  <td>
+                      <div id="R4C2">NO</div>
+                  </td>
+                  <td>
+                      <div id="R4C3">NO</div>
+                  </td>
+                  <td>
+                      <div id="R4C4">NO</div>
+                  </td>
+                  <td>
+                      <div id="R4C5">NO</div>
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      <div id="R5C1">NO</div>
+                  </td>
+                  <td>
+                      <div id="R5C2">NO</div>
+                  </td>
+                  <td>
+                      <div id="R5C3">NO</div>
+                  </td>
+                  <td>
+                      <div id="R5C4">NO</div>
+                  </td>
+                  <td>
+                      <div id="R5C5">NO</div>
+                  </td>
+              </tr>
+            </table> -->               
+        </form>
+    </body>
+</html>
